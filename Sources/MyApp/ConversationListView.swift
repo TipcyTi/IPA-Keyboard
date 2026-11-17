@@ -40,6 +40,7 @@ struct ConversationListView: View {
                     .foregroundColor(Palette.ink)
                     .frame(width: 44, height: 44)
             }
+            .accessibilityLabel("服务")
             Button {
                 startChat()
             } label: {
@@ -48,6 +49,7 @@ struct ConversationListView: View {
                     .foregroundColor(Palette.ink)
                     .frame(width: 44, height: 44)
             }
+            .accessibilityLabel("新建对话")
         }
         .padding(.leading, Metric.margin)
         .padding(.trailing, Metric.margin - 14)

@@ -73,6 +73,8 @@ struct ProviderEditor: View {
             }
             .navigationTitle(isNew ? "新建服务" : "编辑服务")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Palette.canvas, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("取消") { dismiss() }

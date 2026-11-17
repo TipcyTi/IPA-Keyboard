@@ -50,7 +50,7 @@ final class AppStore: ObservableObject {
         providers.append(provider)
         SecretStore.save(apiKey, for: provider.id)
         keys[provider.id] = apiKey
-        if activeProviderID == nil { activeProviderID = provider.id }
+        activeProviderID = provider.id
         save()
     }
 

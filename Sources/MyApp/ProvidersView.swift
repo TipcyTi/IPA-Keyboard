@@ -14,6 +14,8 @@ struct ProvidersView: View {
             }
             .navigationTitle("服务")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Palette.canvas, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("完成") { dismiss() }
@@ -148,6 +150,7 @@ struct ProviderRow: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("设为默认服务")
         }
         .padding(.vertical, 9)
         .overlay(alignment: .bottom) {

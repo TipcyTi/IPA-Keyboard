@@ -146,6 +146,7 @@ struct ChatView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(!canSend && !isStreaming)
+                .accessibilityLabel(isStreaming ? "停止" : "发送")
             }
             .padding(.horizontal, Metric.margin)
             .padding(.top, 10)
@@ -168,7 +169,7 @@ struct ChatView: View {
                 }
             }
             if !store.providers.isEmpty { Divider() }
-            Button("服务") { showProviders = true }
+            Button("服务设置") { showProviders = true }
             Divider()
             Button("删除对话", role: .destructive) {
                 store.deleteConversation(conversationID)
@@ -180,6 +181,7 @@ struct ChatView: View {
                 .foregroundColor(Palette.ink)
                 .frame(width: 30, height: 30)
         }
+        .accessibilityLabel("更多")
     }
 
     private func primaryAction() {
