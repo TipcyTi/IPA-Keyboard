@@ -48,7 +48,10 @@ Base URL 规则：直接拼在后面的路径是 `/chat/completions`，所以地
 │   ├── ChatView.swift                   # 对话页
 │   ├── ProvidersView.swift              # 服务列表
 │   ├── ProviderEditor.swift             # 服务编辑
-│   └── Assets.xcassets/                 # App 图标
+│   └── Assets.xcassets/                 # App 图标（由 Design/Chatgo.png 生成）
+├── Design/
+│   ├── Chatgo.png                       # 图标原图
+│   └── make_icons.py                    # 图标尺寸生成脚本
 ├── Info.plist
 └── project.yml                          # XcodeGen 工程描述
 ```
