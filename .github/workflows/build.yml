@@ -1,0 +1,54 @@
+name: Build Unsigned IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: unsigned-ipa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          xcodebuild -version
+          brew install xcodegen
+
+      - name: Generate project
+        run: xcodegen generate
+
+      - name: Build archive
+        run: |
+          xcodebuild archive \
+            -project MyApp.xcodeproj \
+            -scheme MyApp \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/MyApp.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+
+      - name: Package IPA
+        run: |
+          APP="build/MyApp.xcarchive/Products/Applications/MyApp.app"
+          ls -la "$APP"
+          file "$APP/MyApp"
+          mkdir -p Payload
+          cp -R "$APP" Payload/
+          zip -qry MyApp-unsigned.ipa Payload
+          ls -lh MyApp-unsigned.ipa
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyApp-unsigned-ipa
+          path: MyApp-unsigned.ipa
+          if-no-files-found: error
