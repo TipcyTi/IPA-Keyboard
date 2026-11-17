@@ -55,8 +55,15 @@ final class AppStore: ObservableObject {
     }
 
     func updateProvider(_ provider: Provider, apiKey: String) {
+        let previous = providers.first { $0.id == provider.id }
         if let index = providers.firstIndex(where: { $0.id == provider.id }) {
             providers[index] = provider
+        }
+        if let previous, previous.model != provider.model {
+            for index in conversations.indices
+            where conversations[index].providerID == provider.id && conversations[index].model == previous.model {
+                conversations[index].model = provider.model
+            }
         }
         SecretStore.save(apiKey, for: provider.id)
         keys[provider.id] = apiKey

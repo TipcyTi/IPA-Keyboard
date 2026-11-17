@@ -121,8 +121,17 @@ enum OpenAIService {
                         }
                     }
 
-                    if !emitted, !raw.isEmpty, let text = messageText(from: raw), !text.isEmpty {
-                        continuation.yield(text)
+                    if Task.isCancelled {
+                        continuation.finish()
+                        return
+                    }
+
+                    if !emitted {
+                        if !raw.isEmpty, let text = messageText(from: raw), !text.isEmpty {
+                            continuation.yield(text)
+                        } else {
+                            throw OpenAIError.empty
+                        }
                     }
                     continuation.finish()
                 } catch {
